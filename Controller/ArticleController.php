@@ -15,7 +15,6 @@ class ArticleController
   {
     // Load all required data
     $articles = $this->getArticles();
-
     // Load the view
     require 'View/articles/index.php';
   }
@@ -28,16 +27,18 @@ class ArticleController
       $tableName = 'articles';
       $query = "SELECT * FROM $tableName";
       $statement = $connection->query($query);
-      $articles = $statement->fetchAll();
-      
-      $rawArticles = [];
+      $rawArticles = $statement->fetchAll();
+
+      printR ($rawArticles);
+
       foreach ($rawArticles as $rawArticle) {
-        $articles[] = new Article($rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
+        $articles[] = new Article($rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
       }
-      return $rawArticles;
+
     } catch (PDOException $e) {
       echo "Query Failed: " . $e->getMessage();
     }
+    return $articles;
   }
 
   public function show()
