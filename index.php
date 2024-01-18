@@ -22,6 +22,7 @@ function printR($data)
     echo "</pre>";
 }
 
+
 //connect to DB
 $databaseManager = new DatabaseManager($config['host'], $config['user'], $config['password'], $config['dbname']);
 $databaseManager->connect();
@@ -30,8 +31,6 @@ $databaseManager->connect();
 // If nothing is specified, it will remain empty (home should be loaded)
 $page = $_GET['page'] ?? null;
 
-print_r($page);
-
 // Load the controller
 // It will *control* the rest of the work to load the page
 switch ($page) {
@@ -39,7 +38,8 @@ switch ($page) {
         (new ArticleController($databaseManager))->index();
         break;
     case 'articles-show':
-        // TODO: detail page
+        (new ArticleController($databaseManager))->showArticle();
+        break;
     case 'home':
     default:
         (new HomepageController())->index();

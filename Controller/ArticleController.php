@@ -28,9 +28,7 @@ class ArticleController
       $query = "SELECT * FROM $tableName";
       $statement = $connection->query($query);
       $rawArticles = $statement->fetchAll();
-
-      printR ($rawArticles);
-
+      
       foreach ($rawArticles as $rawArticle) {
         $articles[] = new Article($rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date']);
       }
@@ -41,8 +39,26 @@ class ArticleController
     return $articles;
   }
 
+  public function showArticle() 
+  {
+    $article = $this->show();
+    require 'View/articles/show.php';
+  }
+
   public function show()
   {
-    // TODO: this can be used for a detail page
+    try {
+      $connection = $this->databaseManager->connection;
+      $tableName = 'articles';
+      $id = $_GET['id'];
+      $query = "SELECT * FROM $tableName WHERE id = $id";
+      $statement = $connection->query($query);
+      $rawArticle = $statement->fetchAll();
+      $article = new Article($rawArticle[0]['id'], $rawArticle[0]['title'], $rawArticle[0]['description'], $rawArticle[0]['publish_date']);
+      return $article;
+
+    }catch (PDOException $e) {
+      echo "Query Failed: " . $e->getMessage();
+    }
   }
 }
