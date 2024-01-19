@@ -21,7 +21,7 @@ class Article
         $this->label = $label;
     }
 
-    public function formatPublishDate($format = 'd-m-Y')
+    public function formatPublishDate($format = 'd- M-Y')
     {
         if ($this->publishDate !== null) {
             $dateTime = new DateTime($this->publishDate);
