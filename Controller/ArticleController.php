@@ -19,8 +19,14 @@ class ArticleController
     require 'View/articles/index.php';
   }
 
+    public function editArticle()
+  {
+    $articles = $this->getArticles();
+    require 'View/articles/edit.php';
+  }
+
   // Note: this function can also be used in a repository - the choice is yours
-  private function getArticles()
+  public function getArticles()
   {
     try {
       $connection = $this->databaseManager->connection;
@@ -36,7 +42,7 @@ class ArticleController
     } catch (PDOException $e) {
       echo "Query Failed: " . $e->getMessage();
     }
-    printR($articles);
+    // printR($articles);
     return $articles;
   }
 
@@ -62,4 +68,9 @@ class ArticleController
       echo "Query Failed: " . $e->getMessage();
     }
   }
+
+
+
+
+
 }

@@ -42,6 +42,7 @@ switch ($page) {
         break;
     case 'articles-edit':
         printR($_GET);
+        (new ArticleController($databaseManager))->editArticle();
         break;
     case 'home':
     default:
