@@ -21,7 +21,7 @@ class ArticleController
 
     public function editArticle()
   {
-    $articles = $this->getArticles();
+    $article = $this->show();
     require 'View/articles/edit.php';
   }
 
@@ -36,13 +36,13 @@ class ArticleController
       $rawArticles = $statement->fetchAll();
       
       foreach ($rawArticles as $rawArticle) {
-        $articles[] = new Article($rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date'], $rawArticle['image_url'], $rawArticle['important']);
+        $articles[] = new Article($rawArticle['id'], $rawArticle['title'], $rawArticle['description'], $rawArticle['publish_date'], $rawArticle['image_url'], $rawArticle['label']);
       }
 
     } catch (PDOException $e) {
       echo "Query Failed: " . $e->getMessage();
     }
-    // printR($articles);
+    printR($articles);
     return $articles;
   }
 
@@ -61,7 +61,7 @@ class ArticleController
       $query = "SELECT * FROM $tableName WHERE id = $id";
       $statement = $connection->query($query);
       $rawArticle = $statement->fetchAll();
-      $article = new Article($rawArticle[0]['id'], $rawArticle[0]['title'], $rawArticle[0]['description'], $rawArticle[0]['publish_date'], $rawArticle[0]['image_url'], $rawArticle[0]['important']);
+      $article = new Article($rawArticle[0]['id'], $rawArticle[0]['title'], $rawArticle[0]['description'], $rawArticle[0]['publish_date'], $rawArticle[0]['image_url'], $rawArticle[0]['label']);
       return $article;
 
     }catch (PDOException $e) {
