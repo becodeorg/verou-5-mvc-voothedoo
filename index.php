@@ -40,6 +40,9 @@ switch ($page) {
     case 'articles-show':
         (new ArticleController($databaseManager))->showArticle();
         break;
+    case 'articles-edit':
+        printR($_GET);
+        break;
     case 'home':
     default:
         (new HomepageController())->index();
